@@ -27,14 +27,15 @@ app.use(morgan('dev'));
 // `;
 
 const typeDefs = mergeTypeDefs(loadFilesSync(path.join(__dirname, './typeDefs')));
+const resolvers = mergeResolvers(loadFilesSync(path.join(__dirname, './resolvers')));
 
 // Resolvers
-const resolvers = {
-  Query: {
-    totalPosts: () => 42,
-    me: () => 'Paulo',
-  },
-};
+// const resolvers = {
+//   Query: {
+//     totalPosts: () => 42,
+//     me: () => 'Paulo',
+//   },
+// };
 
 // GraphQL Server
 const apolloServer = new ApolloServer({

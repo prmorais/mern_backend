@@ -1,9 +1,7 @@
 import { gql } from 'apollo-server-express';
 
-const post = gql`
+export = gql`
 type Query {
-  totalPosts: Int!
+  totalPost: Int!
 }
 `;
-
-export default post;

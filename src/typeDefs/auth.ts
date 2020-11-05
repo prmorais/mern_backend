@@ -1,9 +1,7 @@
 import { gql } from 'apollo-server-express';
 
-const auth = gql`
+export = gql`
 type Query {
   me: String!
 }
 `;
-
-export default auth;
