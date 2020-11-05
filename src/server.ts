@@ -2,6 +2,7 @@ import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 // import http from 'http';
 import path from 'path';
+import mongoose from 'mongoose';
 
 // import {makeExecutableSchema} from 'graphql-tools';
 import { mergeResolvers, mergeTypeDefs } from '@graphql-tools/merge';
@@ -15,27 +16,31 @@ dotenv.config();
 // Express server
 const app = express();
 
+// DB Mongo
+const db = async () => {
+  try {
+    await mongoose.connect(process.env.DATABASE_CLOUD, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+      useFindAndModify: false,
+    });
+
+    console.info('MongoAtlas conectado com sucesso!');
+  } catch (error) {
+    console.error('Ocorreu um erro ao conectar o MongoAtlas!', error);
+  }
+};
+
+// Executa a conexão com banco de dados
+db();
+
 // Middlewares express
 app.use(express.json());
 app.use(morgan('dev'));
 
-// Types query/mutation/subscription
-// const typeDefs = `
-// type Query {
-//   totalPosts: Int!
-// }
-// `;
-
 const typeDefs = mergeTypeDefs(loadFilesSync(path.join(__dirname, './typeDefs')));
 const resolvers = mergeResolvers(loadFilesSync(path.join(__dirname, './resolvers')));
-
-// Resolvers
-// const resolvers = {
-//   Query: {
-//     totalPosts: () => 42,
-//     me: () => 'Paulo',
-//   },
-// };
 
 // GraphQL Server
 const apolloServer = new ApolloServer({

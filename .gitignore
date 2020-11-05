@@ -11,6 +11,9 @@
 # production
 /dist
 
+# Outros arquivos
+.env
+
 # misc
 .DS_Store
 .env.local
