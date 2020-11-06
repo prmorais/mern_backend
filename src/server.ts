@@ -19,14 +19,14 @@ const app = express();
 // DB Mongo
 const db = async () => {
   try {
-    await mongoose.connect(process.env.DATABASE_CLOUD, {
+    await mongoose.connect(process.env.DATABASE, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,
       useFindAndModify: false,
     });
 
-    console.info('MongoAtlas conectado com sucesso!');
+    console.info('Mongo conectado com sucesso!');
   } catch (error) {
     console.error('Ocorreu um erro ao conectar o MongoAtlas!', error);
   }
