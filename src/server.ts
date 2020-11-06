@@ -8,13 +8,16 @@ import mongoose from 'mongoose';
 import { mergeResolvers, mergeTypeDefs } from '@graphql-tools/merge';
 import { loadFilesSync } from '@graphql-tools/load-files';
 
-import morgan from 'morgan';
+// import morgan from 'morgan';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
 // Express server
 const app = express();
+// Middlewares express
+// app.use(express.json());
+// app.use(morgan('dev'));
 
 // DB Mongo
 const db = async () => {
@@ -34,10 +37,6 @@ const db = async () => {
 
 // Executa a conexão com banco de dados
 db();
-
-// Middlewares express
-// app.use(express.json());
-app.use(morgan('dev'));
 
 const typeDefs = mergeTypeDefs(loadFilesSync(path.join(__dirname, './typeDefs')));
 const resolvers = mergeResolvers(loadFilesSync(path.join(__dirname, './resolvers')));
