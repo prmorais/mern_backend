@@ -1,11 +1,11 @@
-# import { gql } from 'apollo-server-express';
 
-# export = gql`
-# type Query {
-#   totalPost: Int!
-# }
-# `;
+type Post {
+  id: ID!
+  title: String!
+  description: String!
+}
 
 type Query {
   totalPost: Int!
+  allPosts: [Post!]!
 }
