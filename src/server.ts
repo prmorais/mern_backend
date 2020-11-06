@@ -36,7 +36,7 @@ const db = async () => {
 db();
 
 // Middlewares express
-app.use(express.json());
+// app.use(express.json());
 app.use(morgan('dev'));
 
 const typeDefs = mergeTypeDefs(loadFilesSync(path.join(__dirname, './typeDefs')));
