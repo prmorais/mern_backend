@@ -10,6 +10,7 @@ import { loadFilesSync } from '@graphql-tools/load-files';
 
 import morgan from 'morgan';
 import dotenv from 'dotenv';
+
 import { authCheck } from './helpers/auth';
 
 dotenv.config();
@@ -46,6 +47,7 @@ const resolvers = mergeResolvers(loadFilesSync(path.join(__dirname, './resolvers
 const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,
+  context: ({ req, res }) => ({ req, res }),
 });
 
 // applyMiddleware - metódo que conecta ApolloServer a um framework HTTP específico

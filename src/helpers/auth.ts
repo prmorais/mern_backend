@@ -1,8 +1,8 @@
-import { NextFunction, Request, Response } from 'express';
+import { Request, Response } from 'express';
 
-const authorized = false;
+const authorized = true;
 
-export const authCheck = (req: Request, res: Response, next: NextFunction) => {
+export const authCheck = (req: Request, res: Response, next = (f?) => f) => {
   if (authorized) {
     next();
   } else {
