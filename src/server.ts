@@ -8,8 +8,9 @@ import mongoose from 'mongoose';
 import { mergeResolvers, mergeTypeDefs } from '@graphql-tools/merge';
 import { loadFilesSync } from '@graphql-tools/load-files';
 
-// import morgan from 'morgan';
+import morgan from 'morgan';
 import dotenv from 'dotenv';
+import { authCheck } from './helpers/auth';
 
 dotenv.config();
 
@@ -17,7 +18,7 @@ dotenv.config();
 const app = express();
 // Middlewares express
 // app.use(express.json());
-// app.use(morgan('dev'));
+app.use(morgan('dev'));
 
 // DB Mongo
 const db = async () => {
@@ -56,7 +57,7 @@ apolloServer.applyMiddleware({
 // const httpSever = http.createServer(app);
 
 // Rest endpoint
-app.get('/rest', (req, res) => {
+app.get('/rest', authCheck, (req, res) => {
   res.json({
     data: 'Endpoint raiz rest',
   });
