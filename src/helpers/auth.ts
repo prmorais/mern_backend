@@ -1,16 +1,22 @@
-import { Request, Response } from 'express';
+import { Request } from 'express';
+import admin from 'firebase-admin';
+import path from 'path';
 
-// const authorized = true;
+const serviceAccount = path.resolve(__dirname, '../config/fbServiceAccountKey.json');
 
-export const authCheck = (req: Request, res: Response, next = (f?) => f) => {
-  if (!req.headers.authtoken) throw new Error('Não autorizado');
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  // databaseURL: "https://gqlreactnode13.firebaseio.com"
+});
 
-  // Se houve token, faz uma validação
-  const valid = req.headers.authtoken === 'secret';
+export const authCheck = async (req: Request) => {
+  try {
+    const currentUser = await admin.auth().verifyIdToken(req.headers.authorization);
+    console.log('Usuário corrente', currentUser);
 
-  if (valid) {
-    next();
-  } else {
-    throw new Error('Não autorizado');
+    return currentUser;
+  } catch (err) {
+    console.log('Erro ao validar autorização');
+    throw new Error('Token expirado ou inválido');
   }
 };

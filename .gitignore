@@ -12,6 +12,7 @@
 /dist
 
 # Outros arquivos
+config
 .env
 
 # misc

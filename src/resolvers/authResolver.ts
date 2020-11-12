@@ -1,7 +1,7 @@
 import { authCheck } from '../helpers/auth';
 
-const me = (parent, args, { req, res }) => {
-  authCheck(req, res);
+const me = async (parent, args, { req }) => {
+  await authCheck(req);
   return 'Paulo';
 };
 
