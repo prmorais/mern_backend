@@ -1,3 +1,4 @@
+import { authCheck } from '../helpers/auth';
 import { posts } from '../temp';
 
 interface IInput {
@@ -11,7 +12,10 @@ interface IPostInput {
 
 // Queries
 const totalPost = () => posts.length;
-const allPosts = () => posts;
+const allPosts = async (parent, args, { req }) => {
+  await authCheck(req);
+  return posts;
+};
 
 // Mutations
 const newPost = (parent, args: IPostInput) => {
