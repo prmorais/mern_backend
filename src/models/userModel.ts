@@ -26,10 +26,12 @@ const userSchema = new mongoose.Schema({
   },
   images: {
     type: Array,
-    default: {
-      url: 'https://via.placeholder.com/200x200.png?text=Profile',
-      public_id: Date.now,
-    },
+    default: [
+      {
+        url: 'https://via.placeholder.com/200x200.png?text=Profile',
+        public_id: Date.now,
+      },
+    ],
   },
   about: {
     type: String,
