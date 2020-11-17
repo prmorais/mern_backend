@@ -3,9 +3,9 @@ import shortid from 'shortid';
 import { authCheck } from '../helpers/auth';
 import User from '../models/userModel';
 
-const me = async (parent: any, args: any, { req }) => {
-  await authCheck(req);
-  return 'Paulo';
+const profile = async (parent: any, args: any, { req }) => {
+  const currentUser = await authCheck(req);
+  return User.findOne({ email: currentUser.email }).exec();
 };
 
 const userCreate = async (parent: any, args: any, { req }) => {
@@ -19,8 +19,6 @@ const userCreate = async (parent: any, args: any, { req }) => {
 };
 
 const userUpdate = async (parent: any, args: any, { req }) => {
-  console.log({ ...args.input });
-
   const currentUser = await authCheck(req);
 
   const updatedUser = await User.findOneAndUpdate(
@@ -35,7 +33,7 @@ const userUpdate = async (parent: any, args: any, { req }) => {
 
 export = {
   Query: {
-    me,
+    profile,
   },
   Mutation: {
     userCreate,

@@ -3,10 +3,6 @@ type UserCreateResponse {
   email: String!
 }
 
-type Query {
-  me: String!
-}
-
 type Image {
   url: String
   public_id: String
@@ -35,6 +31,9 @@ input UserUpdateInput {
   about: String
 }
 
+type Query {
+  profile: User!
+}
 
 type Mutation {
   userCreate: UserCreateResponse!
