@@ -12,7 +12,7 @@ admin.initializeApp({
 export const authCheck = async (req: Request) => {
   try {
     const currentUser = await admin.auth().verifyIdToken(req.headers.authorization);
-    console.log('Usuário corrente', currentUser);
+    // console.log('Usuário corrente', currentUser);
 
     return currentUser;
   } catch (err) {

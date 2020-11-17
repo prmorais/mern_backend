@@ -7,6 +7,36 @@ type Query {
   me: String!
 }
 
+type Image {
+  url: String
+  public_id: String
+}
+
+type User {
+  _id: ID!
+  username: String
+  email: String
+  name: String
+  images: [Image]
+  about: String
+  createdAt: String
+  updatedAt: String
+}
+
+input ImageInput {
+  url: String
+  public_id: String
+}
+
+input UserUpdateInput {
+  username: String
+  name: String
+  images: [ImageInput]
+  about: String
+}
+
+
 type Mutation {
   userCreate: UserCreateResponse!
+  userUpdate(input: UserUpdateInput): User!
 }
