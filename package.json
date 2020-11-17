@@ -18,6 +18,7 @@
     "express": "^4.17.1",
     "firebase-admin": "^9.4.0",
     "graphql": "^15.4.0",
+    "graphql-scalars": "^1.4.1",
     "graphql-tools": "^7.0.1",
     "mongoose": "^5.10.12",
     "morgan": "^1.10.0",

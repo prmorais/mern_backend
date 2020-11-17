@@ -1,4 +1,6 @@
 import shortid from 'shortid';
+// eslint-disable-next-line no-unused-vars
+import { DateTimeResolver } from 'graphql-scalars';
 
 import { authCheck } from '../helpers/auth';
 import User from '../models/userModel';

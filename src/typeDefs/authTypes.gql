@@ -1,3 +1,6 @@
+# scalar type
+scalar DateTime
+
 type UserCreateResponse {
   username: String!
   email: String!
@@ -15,8 +18,8 @@ type User {
   name: String
   images: [Image]
   about: String
-  createdAt: String
-  updatedAt: String
+  createdAt: DateTime
+  updatedAt: DateTime
 }
 
 input ImageInput {
