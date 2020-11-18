@@ -3,6 +3,8 @@ import { ApolloServer } from 'apollo-server-express';
 // import http from 'http';
 import path from 'path';
 import mongoose from 'mongoose';
+import cloudinary from 'cloudinary';
+import cors from 'cors';
 
 // import {makeExecutableSchema} from 'graphql-tools';
 import { mergeResolvers, mergeTypeDefs } from '@graphql-tools/merge';
@@ -65,6 +67,24 @@ app.get('/rest', authCheck, (req, res) => {
   });
 });
 
+// Upload de imagem
+app.post('/uploadimage', (req, res) => {
+  cloudinary.v2.uploader.upload(
+    req.body.image,
+    (result) => {
+      res.send({
+        url: result.url,
+        public_id: result.public_id,
+      });
+    },
+    // {
+    //   public_id: `${Date.now()}`,
+    //   resource_type: 'auto',
+    // }
+  );
+});
+
+// Port
 app.listen(process.env.PORT, () => {
   console.log(`Servidor rodando em http://localhost:${process.env.PORT}`);
   console.log(`Servidor GraphQL rodando na porta:${process.env.PORT}${apolloServer.graphqlPath}`);
