@@ -84,6 +84,16 @@ app.post('/uploadimage', (req, res) => {
   );
 });
 
+// Remover imagem
+app.post('/removeimage', (req, res) => {
+  const image_id = req.body.public_id;
+
+  cloudinary.v2.uploader.destroy(image_id, (error, result) => {
+    if (error) return res.json({ success: false, error });
+    return res.send('Ok');
+  });
+});
+
 // Port
 app.listen(process.env.PORT, () => {
   console.log(`Servidor rodando em http://localhost:${process.env.PORT}`);

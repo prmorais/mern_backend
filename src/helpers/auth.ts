@@ -1,4 +1,4 @@
-import { Request } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import admin from 'firebase-admin';
 import path from 'path';
 
@@ -18,5 +18,17 @@ export const authCheck = async (req: Request) => {
   } catch (err) {
     console.log('Erro ao validar autorização');
     throw new Error('Token expirado ou inválido');
+  }
+};
+
+export const authCheckMiddleware = (req: Request, res: Response, next: NextFunction) => {
+  if (req.headers.authorization) {
+    admin.auth().verifyIdToken(req.headers.authorization)
+      .then((result) => {
+        next();
+      })
+      .catch((err) => console.log(err));
+  } else {
+    res.json({ error: 'Não autorizado!' });
   }
 };
