@@ -13,7 +13,7 @@ import { loadFilesSync } from '@graphql-tools/load-files';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 
-import { authCheck } from './helpers/auth';
+import { authCheckMiddleware } from './helpers/auth';
 
 dotenv.config();
 
@@ -61,14 +61,21 @@ apolloServer.applyMiddleware({
 // const httpSever = http.createServer(app);
 
 // Rest endpoint
-app.get('/rest', authCheck, (req, res) => {
+app.get('/rest', authCheckMiddleware, (req, res) => {
   res.json({
     data: 'Endpoint raiz rest',
   });
 });
 
+// Configuração do cloudinary
+cloudinary.v2.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
 // Upload de imagem
-app.post('/uploadimage', (req, res) => {
+app.post('/uploadimage', authCheckMiddleware, (req, res) => {
   cloudinary.v2.uploader.upload(
     req.body.image,
     (result) => {
@@ -85,7 +92,7 @@ app.post('/uploadimage', (req, res) => {
 });
 
 // Remover imagem
-app.post('/removeimage', (req, res) => {
+app.post('/removeimage', authCheckMiddleware, (req, res) => {
   const image_id = req.body.public_id;
 
   cloudinary.v2.uploader.destroy(image_id, (error, result) => {
