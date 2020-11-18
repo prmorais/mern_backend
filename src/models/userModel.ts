@@ -1,12 +1,12 @@
-import mongoose, { Document } from 'mongoose';
+import mongoose from 'mongoose';
 
-interface IUserSchema extends Document {
-  username: string,
-  name: string,
-  email: string,
-  imagens: [],
-  about: string
-}
+// interface IUserSchema extends Document {
+//   username: string,
+//   name: string,
+//   email: string,
+//   imagens: [],
+//   about: string
+// }
 
 const userSchema = new mongoose.Schema({
   username: {
