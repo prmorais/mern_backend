@@ -19,8 +19,10 @@ dotenv.config();
 
 // Express server
 const app = express();
+
 // Middlewares express
 // app.use(express.json());
+app.use(cors({ origin: '*' }));
 app.use(morgan('dev'));
 
 // DB Mongo
@@ -76,9 +78,14 @@ cloudinary.v2.config({
 
 // Upload de imagem
 app.post('/uploadimage', authCheckMiddleware, (req, res) => {
+  // eslint-disable-next-line prefer-template
+  console.log('IMAGE ' + req.body.image);
   cloudinary.v2.uploader.upload(
     req.body.image,
     (result) => {
+      // eslint-disable-next-line prefer-template
+      console.log('É O RESULT ' + result);
+
       res.send({
         url: result.url,
         public_id: result.public_id,
