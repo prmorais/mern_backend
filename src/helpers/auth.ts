@@ -21,10 +21,12 @@ export const authCheck = async (req: Request) => {
   }
 };
 
-export const authCheckMiddleware = (req: Request, res: Response, next: NextFunction) => {
+export const authCheckMiddleware = (
+  req: Request, res: Response, next: NextFunction,
+) => {
   if (req.headers.authorization) {
     admin.auth().verifyIdToken(req.headers.authorization)
-      .then((result) => {
+      .then(() => {
         next();
       })
       .catch((err) => console.log(err));

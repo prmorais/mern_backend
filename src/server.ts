@@ -1,9 +1,9 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import { ApolloServer } from 'apollo-server-express';
 // import http from 'http';
 import path from 'path';
 import mongoose from 'mongoose';
-import cloudinary from 'cloudinary';
+import { v2 } from 'cloudinary';
 import cors from 'cors';
 
 // import {makeExecutableSchema} from 'graphql-tools';
@@ -21,8 +21,8 @@ dotenv.config();
 const app = express();
 
 // Middlewares express
-// app.use(express.json());
 app.use(cors({ origin: '*' }));
+app.use(express.json());
 app.use(morgan('dev'));
 
 // DB Mongo
@@ -70,40 +70,32 @@ app.get('/rest', authCheckMiddleware, (req, res) => {
 });
 
 // Configuração do cloudinary
-cloudinary.v2.config({
+v2.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
 // Upload de imagem
-app.post('/uploadimage', authCheckMiddleware, (req, res) => {
-  // eslint-disable-next-line prefer-template
-  console.log('IMAGE ' + req.body.image);
-  cloudinary.v2.uploader.upload(
-    req.body.image,
-    (result) => {
-      // eslint-disable-next-line prefer-template
-      console.log('É O RESULT ' + result);
-
+app.post('/uploadimage', authCheckMiddleware, (req: Request, res: Response) => {
+  v2.uploader.upload(req.body.image)
+    .then((data) => {
       res.send({
-        url: result.url,
-        public_id: result.public_id,
+        url: data.url,
+        public_id: data.public_id,
       });
-    },
-    // {
-    //   public_id: `${Date.now()}`,
-    //   resource_type: 'auto',
-    // }
-  );
+    }).catch((err) => {
+      if (err) console.error('Erro inesperado', err);
+    });
 });
 
 // Remover imagem
 app.post('/removeimage', authCheckMiddleware, (req, res) => {
   const image_id = req.body.public_id;
 
-  cloudinary.v2.uploader.destroy(image_id, (error, result) => {
+  v2.uploader.destroy(image_id, (error, result) => {
     if (error) return res.json({ success: false, error });
+
     return res.send('Ok');
   });
 });
