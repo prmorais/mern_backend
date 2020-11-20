@@ -81,7 +81,7 @@ app.post('/uploadimage', authCheckMiddleware, (req: Request, res: Response) => {
   v2.uploader.upload(req.body.image)
     .then((data) => {
       res.send({
-        url: data.url,
+        url: data.secure_url,
         public_id: data.public_id,
       });
     }).catch((err) => {

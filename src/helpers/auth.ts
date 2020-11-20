@@ -31,6 +31,6 @@ export const authCheckMiddleware = (
       })
       .catch((err) => console.log(err));
   } else {
-    res.json({ error: 'Não autorizado!' });
+    res.json({ error: 'Não autorizado no authCheckMiddleware!' });
   }
 };
