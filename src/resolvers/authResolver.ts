@@ -5,10 +5,12 @@ import { DateTimeResolver } from 'graphql-scalars';
 import { authCheck } from '../helpers/auth';
 import User from '../models/userModel';
 
-const profile = async (parent: any, args: any, { req }) => {
+const profile = async (parent: any, args: any, { req }: any) => {
   const currentUser = await authCheck(req);
   return User.findOne({ email: currentUser.email }).exec();
 };
+
+const publicProfile = async (parent: any, args: any) => User.findOne({ username: args.username }).exec();
 
 const userCreate = async (parent: any, args: any, { req }) => {
   const currentUser = await authCheck(req);
@@ -36,6 +38,7 @@ const userUpdate = async (parent: any, args: any, { req }) => {
 export = {
   Query: {
     profile,
+    publicProfile,
   },
   Mutation: {
     userCreate,
