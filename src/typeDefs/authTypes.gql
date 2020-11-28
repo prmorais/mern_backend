@@ -38,6 +38,7 @@ input UserUpdateInput {
 type Query {
   profile: User!
   publicProfile(username: String!): User!
+  allUsers: [User!]
 
 }
 

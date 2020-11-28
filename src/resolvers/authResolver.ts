@@ -12,6 +12,8 @@ const profile = async (parent: any, args: any, { req }: any) => {
 
 const publicProfile = async (parent: any, args: any) => User.findOne({ username: args.username }).exec();
 
+const allUsers = async () => User.find().exec();
+
 const userCreate = async (parent: any, args: any, { req }) => {
   const currentUser = await authCheck(req);
   const user = await User.findOne({ email: currentUser.email });
@@ -39,6 +41,7 @@ export = {
   Query: {
     profile,
     publicProfile,
+    allUsers,
   },
   Mutation: {
     userCreate,
